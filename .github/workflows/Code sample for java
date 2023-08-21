@@ -1,0 +1,26 @@
+import java.util.*;
+
+public class Main{
+    public static void main(String[]args){
+        Scanner input = new Scanner(System.in);
+        
+        int egg = 100;
+        int milk = 200;
+        
+        System.out.print("Enter the quantity of Egg: ");
+        int EggQuantity = input.nextInt();
+        System.out.print("Enter the quantity of Milk: ");
+        int MilkQuantity = input.nextInt();
+        
+        int TotalEgg = EggQuantity * egg;
+        int TotalMilk = MilkQuantity * milk;
+        int Total = TotalEgg + TotalMilk;
+        
+        System.out.println("The total ammount of your order is: "+Total);
+        if(Total==10000){
+            System.out.println("Thanks a lot!");
+        }else{
+            System.out.println("Have a nice day!");
+        }
+    }
+}
