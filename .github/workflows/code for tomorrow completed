@@ -1,20 +1,69 @@
 #include <iostream>
+#include <string>
+
 using namespace std;
 
-int main(){
-	int rows,cols;
-	
-	cout << "Enter the number or rows: ";
-	cin >> rows;
-	cout << "Enter the number of columns; ";
-	cin >> cols;
-	
-	char leftBracket = char(91);
-	char rightBracket = char(93);
-	
-	for (int i =1; i <= rows;i++) {
-		for (int j = 1; j<= cols;j++){
-			if (j==1 ||i==rows||j==1||)
-		}
-	}
+int main() {
+    unsigned char topLeft = 201;
+    unsigned char topRight = 187;
+    unsigned char horizontal = 205;
+    unsigned char vertical = 186;
+    unsigned char bottomLeft = 200;
+    unsigned char bottomRight = 188;
+
+    unsigned int width, height;
+    string centerText;
+
+    cout << "Enter width: ";
+    cin >> width;
+
+    cout << "Enter height: ";
+    cin >> height;
+
+    cin.ignore(); // Clear newline from previous input
+
+    cout << "Enter text for center: ";
+    getline(cin, centerText);
+
+    cout << topLeft;
+    for (unsigned int i = 0; i < width - 2; ++i) {
+        cout << horizontal;
+    }
+    cout << topRight << endl;
+
+    for (unsigned int i = 0; i < (height - 2) / 2; ++i) {
+        cout << vertical;
+        for (unsigned int j = 0; j < width - 2; ++j) {
+            cout << " ";
+        }
+        cout << vertical << endl;
+    }
+
+    // Display centered text
+    cout << vertical;
+    unsigned int padding = (width - 2 - centerText.length()) / 2;
+    for (unsigned int j = 0; j < padding; ++j) {
+        cout << " ";
+    }
+    cout << centerText;
+    for (unsigned int j = 0; j < width - 2 - padding - centerText.length(); ++j) {
+        cout << " ";
+    }
+    cout << vertical << endl;
+
+    for (unsigned int i = (height - 2) / 2; i < height - 2; ++i) {
+        cout << vertical;
+        for (unsigned int j = 0; j < width - 2; ++j) {
+            cout << " ";
+        }
+        cout << vertical << endl;
+    }
+
+    cout << bottomLeft;
+    for (unsigned int i = 0; i < width - 2; ++i) {
+        cout << horizontal;
+    }
+    cout << bottomRight << endl;
+
+    return 0;
 }
