@@ -1,0 +1,28 @@
+import javax.swing.*;
+
+public class SampleDialog{
+    public static void main(String[]args) {
+
+        String eggQuantity = JOptionPane.showInputDialog("Enter the quantity of Egg: ");
+        int eggInput = Integer.parseInt(eggQuantity);
+
+        String milkQuantity = JOptionPane.showInputDialog("Enter the quntity of Milk: ");
+        int milkInput = Integer.parseInt(milkQuantity);
+
+        int egg = 250;
+        int milk = 150;
+
+        String title;
+        title = "Order"; 
+
+        int totalEgg = egg * eggInput;
+        int totalMilk = milk * milkInput;
+        int total = totalEgg + totalMilk;
+        String results = "Total eggs: "+totalEgg + "\nTotal Milk: " + totalMilk +"\nTotal: " + total;
+
+        JOptionPane.showMessageDialog(null, results, title, JOptionPane.INFORMATION_MESSAGE);
+        
+
+
+    }
+}
