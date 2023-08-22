@@ -1,24 +1,29 @@
+// Michael Angello D. Villenas
+
 #include <iostream>
 #include <string>
+#include <windows.h>
 
 using namespace std;
 
+
 int main() {
-    unsigned char topLeft = 201;
-    unsigned char topRight = 187;
-    unsigned char horizontal = 205;
-    unsigned char vertical = 186;
-    unsigned char bottomLeft = 200;
+    unsigned char topLeft = 201; //201
+    unsigned char topRight = 187; // 187
+    unsigned char horizontal = 205; // 205
+    unsigned char vertical = 186; // 186
+    unsigned char bottomLeft = 200; // 200
     unsigned char bottomRight = 188;
 
     unsigned int width, height;
     string centerText;
 
-    cout << "Enter width: ";
-    cin >> width;
-
     cout << "Enter height: ";
     cin >> height;
+
+    cout << "Enter width: ";
+    cin >> width;
+    
 
     cin.ignore(); // Clear newline from previous input
 
