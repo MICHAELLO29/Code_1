@@ -1,0 +1,37 @@
+import javax.swing.JOptionPane;
+
+public class StudentInfo {
+    public static void main(String[] args) {
+        String name = JOptionPane.showInputDialog("Enter your name:");
+        
+        String[] courses = {"Computer Science", "Engineering", "Medicine", "Business"};
+        int courseChoice = JOptionPane.showOptionDialog(
+                null,
+                "Select your course:",
+                "Course Selection",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                courses,
+                courses[0]
+        );
+        String selectedCourse = courses[courseChoice];
+        
+        String[] yearLevels = {"Freshman", "Sophomore", "Junior", "Senior"};
+        int yearLevelChoice = JOptionPane.showOptionDialog(
+                null,
+                "Select your year level:",
+                "Year Level Selection",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                yearLevels,
+                yearLevels[0]
+        );
+        String selectedYearLevel = yearLevels[yearLevelChoice];
+        
+        String message = "Name: " + name + "\nCourse: " + selectedCourse + "\nYear Level: " + selectedYearLevel;
+        
+        JOptionPane.showMessageDialog(null, message, "Student Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
