@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a, c;
+    string pass;
+    c = 1;
+    
+    do {
+        cout << "Enter Password: ";
+        getline(cin, pass);
+    } while (pass != "DO WHILE");
+
+    cout << "FOR LOOP:" << endl;
+    for (a = 1; a <= 10; a++) {
+        cout << a * a << endl;
+    }
+    cout << "WHILE LOOP:" << endl;
+    while (c <= 10) {
+        cout << c * c << endl;
+        c += 1;
+    }
+
+    return 0;
+}
