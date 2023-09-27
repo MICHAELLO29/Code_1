@@ -1,8 +1,6 @@
 #include <iostream>
 using namespace std;
 
- 
-
 void displayMenu() {
     cout << "|=======================================|" << endl;
     cout << "| Main Menu of Access, Replace, Insert  |" << endl;
@@ -17,43 +15,36 @@ void displayMenu() {
     cout << "Enter a number: ";
 }
 
- 
-
 int main() {
-    int array[10] = {1, 2, 3, 4, 5};
-    int i = 0;
-	int input;
+    int* array = new int[5] {1, 2, 3, 4, 5};  // Dynamically allocate memory for the array
+    int size = 5;
+    int p = 0;
+    int input;
     int index;
     int newValue;
-
- 
 
     while (true) {
         cout << "|=======================================|" << "\n";
         cout << "|" << " " << "Array: [";
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < size; j++) {
             cout << array[j];
-            if (j < 4)
+            if (j < size - 1)
                 cout << ",";
         }
-        cout << "]" << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " <<"|" << "\n";
+        cout << "]" << " " << " " << " " << " " << " " << " " << " " << " " << " "  << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " <<"|" << "\n";
         displayMenu();
-        cin >> input;
-        i++;
-
- 
-
+    
         if (input == 1) {
-            cout << "Select an index to Access (0-4): ";
+            cout << "Select an index to Access (0-" << size - 1 << "): ";
             cin >> index;
-            if (index >= 0 && index < 5)
+            if (index >= 0 && index < size)
                 cout << "Number at index " << index << " is: " << array[index] << "\n";
             else
                 cout << "Invalid index!\n";
         } else if (input == 2) {
-            cout << "Select an index to Replace (0-4): ";
+            cout << "Select an index to Replace (0-" << size - 1 << "): ";
             cin >> index;
-            if (index >= 0 && index < 5) {
+            if (index >= 0 && index < size) {
                 cout << "Enter the new value: ";
                 cin >> array[index];
                 cout << "Number at index " << index << " has been replaced.\n";
@@ -61,49 +52,31 @@ int main() {
                 cout << "Invalid index!\n";
             }
         } else if (input == 3) {
-            if (i < 5) {
-                cout << "Select an index to Insert (0-4): ";
-                cin >> index;
-                if (index >= 0 && index <= i) {
-                    cout << "Enter the value to insert: ";
-                    cin >> newValue;
-                    for (int j = i; j > index; j--)
-                        array[j] = array[j - 1];
-
- 
-
-                    array[index] = newValue;
-                    i++;
-                    cout << "Value has been inserted at index " << index << "\n";
-                } else {
-                    cout << "Invalid index!\n";
-                }
-            } else {
-                cout << "Array is full. Cannot insert more elements.\n";
+            int* tempArray = new int[size + 1];
+            for (int i = 0; i < size; i++) {
+                tempArray[i] = array[i];
             }
+            delete[] array;
+            array = tempArray;
+            cout << "Enter the new value to append at the end of the array: " << "\n";
+            cin >> newValue;
+            array[size] = newValue;
+            size++;
+            cout << "Value has been appended to the array.\n";
         } else if (input == 4) {
             cout << "Array: [";
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < size; j++) {
                 cout << array[j];
-                if (j < 4)
+                if (j < size - 1)
                     cout << ",";
             }
             cout << "]\n";
-
- 
-
             cout << "\n";
         } else if (input == 5) {
+            delete[] array;
             break;
         }
     }
 
- 
-
     cout << "\n";
-    return 0;
 }
-
-
-has context menu
-Compose
