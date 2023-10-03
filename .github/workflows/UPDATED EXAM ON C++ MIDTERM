@@ -42,7 +42,9 @@ string options[] = {
 
 " 6. Delete                           ",
 
-" 7. Search                           "
+" 7. Search                           ",
+
+" 8. Sort                             ",
 };
 
 for (const auto& option : options) {
@@ -61,7 +63,8 @@ for (int i = 0; i < menuWidth - 2; i++) {
 	cout << "Enter a number: ";
 }
 
-void displayArray(int* array, int size) {
+void displayArray(int* array, int size, bool displaySorted, string&message) {
+	cout << message << "\n";
 	char topLeft = 201;
 	char topRight = 187;
 	char horizontal = 205;
@@ -76,10 +79,18 @@ void displayArray(int* array, int size) {
 
 cout << topRight << "\n";
 cout << vertical << " Array: [";
-for (int j = 0; j < size; j++) {
-	cout << array[j];
-	if (j < size - 1)
-	cout << ",";
+if (displaySorted) {
+	for (int j = 0; j < size; j++) {
+		cout << array[j];
+		if(j < size - 1)
+		cout << ",";
+	} 
+} else {
+	for (int j = 0; j < size; j++) {
+		cout << array[j];
+		if(j < size - 1)
+		cout << ",";
+	}
 }
 	cout << "] ";
 for (int i = 0; i < displayWidth - 12; i++) {
@@ -93,14 +104,27 @@ for (int i = 0; i < displayWidth - 12; i++) {
 	cout << bottomRight << "\n";
 }
 
+void swapsort (int* array, int size) {
+	int i, j, dummy;
+	for (i = 0; i < size-1; i++) {
+		for (j=i+1; j < size; j++) {
+			if(array[i] > array[j]) {
+				dummy = array[i];
+				array[i] = array[j];
+				array[j] = dummy;
+			}
+		}
+	}
+}
+
 int main() {
-	int* array = new int[5] {1, 2, 3, 4, 5};
+	int* array = new int[5] {5, 4, 3, 2, 1};
 	int size = 5;
 	int input;
 	int index;
 	int newValue; 
 while (true) {
-	displayArray(array, size);
+	displayArray(array, size, false, "Displaying unordered list: \n");
 	displayMenu();
 	cin >> input;
 	if (input == 1) {
@@ -169,22 +193,28 @@ while (true) {
 		cout << "Invalid Index!\n";
 	}
 } else if (input == 7) {
-	int searchValue;
-	cout << "Enter a value to search the index: ";
-	cin >> searchValue;
-	bool found = false;
-	int i;
-	for (i = 0; i < size; i++) {
-		if (array[i] == searhValue) {
-		
-			cout << "Value of " << searchValue << "is " << i;
-		}if (!found)
-			cout << "Not found!";
-		}
-	}
-}
-}
+    int searchValue;
+    cout << "Enter a value to search the index: ";
+    cin >> searchValue;
+    bool found = false;
+    int i;
+    for (i = 0; i < size; i++) {
+        if (array[i] == searchValue) {
+            cout << "Value " << searchValue << " is at index " << i << ".\n";
+            found = true;
+            break;
+        }
+    }
 
+    if (!found)
+        cout << "Value " << searchValue << " not found in the array.\n";
+} else if (input == 8) {
+	swapsort(array,size);
+	displayArray(array,size, true, "Displaying the sorted array: ");
+}
+	}
 cout << "\n";
 return 0;
-} 
+}
+
+ 
