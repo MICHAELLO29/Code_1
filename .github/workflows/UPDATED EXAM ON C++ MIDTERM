@@ -40,8 +40,9 @@ string options[] = {
 
 " 5. Insert                           ",
 
-" 6. Delete                           "
+" 6. Delete                           ",
 
+" 7. Search                           "
 };
 
 for (const auto& option : options) {
@@ -167,7 +168,23 @@ while (true) {
 	}else {
 		cout << "Invalid Index!\n";
 	}
-}}
+} else if (input == 7) {
+	int searchValue;
+	cout << "Enter a value to search the index: ";
+	cin >> searchValue;
+	bool found = false;
+	int i;
+	for (i = 0; i < size; i++) {
+		if (array[i] == searhValue) {
+		
+			cout << "Value of " << searchValue << "is " << i;
+		}if (!found)
+			cout << "Not found!";
+		}
+	}
+}
+}
+
 cout << "\n";
 return 0;
 } 
