@@ -1,0 +1,173 @@
+
+#include <iostream>
+using namespace std;
+
+void displayMenu() {
+
+	char topLeft = 201;
+
+	char topRight = 187;
+
+	char horizontal = 205;
+
+	char vertical = 186;
+
+	char bottomLeft = 200;
+
+	char bottomRight = 188;
+
+	int menuWidth = 39; // Total width of the menu box
+	cout << topLeft;
+	for (int i = 0; i < menuWidth - 2; i++) {
+	cout << horizontal;
+}
+	cout << topRight << endl;
+	cout << vertical << " Main Menu of Access, Replace, Insert" << vertical << endl;
+	cout << vertical;
+	for (int i = 0; i < menuWidth - 2; i++) {
+	cout << horizontal;
+} cout << vertical << endl;
+
+string options[] = {
+
+" 1. Access                           ", 
+
+" 2. Replace                          ",
+
+" 3. Append                           ",
+
+" 4. Exit                             ",
+
+" 5. Insert                           ",
+
+" 6. Delete                           "
+
+};
+
+for (const auto& option : options) {
+	cout << vertical << option << vertical << endl;
+	cout << vertical;
+	for (int i = 0; i < menuWidth - 2; i++) {
+	cout << horizontal;
+	}
+	cout << vertical << endl;
+} cout << bottomLeft;
+for (int i = 0; i < menuWidth - 2; i++) {
+	cout << horizontal;
+}
+	cout << bottomRight << endl;
+	cout << "\n";
+	cout << "Enter a number: ";
+}
+
+void displayArray(int* array, int size) {
+	char topLeft = 201;
+	char topRight = 187;
+	char horizontal = 205;
+	char vertical = 186;
+	char bottomLeft = 200;
+	char bottomRight = 188;
+	cout << topLeft;
+	int displayWidth = 10 + size * 2;
+	for (int i = 0; i < displayWidth; i++) {
+	cout << horizontal;
+}
+
+cout << topRight << "\n";
+cout << vertical << " Array: [";
+for (int j = 0; j < size; j++) {
+	cout << array[j];
+	if (j < size - 1)
+	cout << ",";
+}
+	cout << "] ";
+for (int i = 0; i < displayWidth - 12; i++) {
+	cout << " ";
+}
+	cout << vertical << "\n";
+	cout << bottomLeft;
+	for (int i = 0; i < displayWidth; i++) {
+	cout << horizontal;
+}
+	cout << bottomRight << "\n";
+}
+
+int main() {
+	int* array = new int[5] {1, 2, 3, 4, 5};
+	int size = 5;
+	int input;
+	int index;
+	int newValue; 
+while (true) {
+	displayArray(array, size);
+	displayMenu();
+	cin >> input;
+	if (input == 1) {
+	cout << "Select an index to Access (0-" << size - 1 << "): ";
+	cin >> index;
+	if (index >= 0 && index < size)
+	cout << "Number at index " << index << " is: " << array[index] << "\n";
+	else
+	cout << "Invalid index!\n";
+}else if (input == 2) {
+	cout << "Select an index to Replace (0-" << size - 1 << "): ";
+	cin >> index;
+	if (index >= 0 && index < size) {
+	cout << "Enter the new value: ";
+	cin >> array[index];
+	cout << "Number at index " << index << " has been replaced.\n";
+}else {
+	cout << "Invalid index!\n";
+}} else if (input == 3) {
+	int* tempArray = new int[size + 1];
+	for (int i = 0; i < size; i++) {
+	tempArray[i] = array[i];
+}
+	delete[] array;
+	array = tempArray; 
+	cout << "Enter the new value to append at the end of the array: " << "\n";
+	cin >> newValue;
+	array[size] = newValue;
+	size++;
+	cout << "Value has been appended to the array.\n";
+}else if (input == 4) {
+	delete[] array;
+	break;
+}else if (input == 5) {
+	cout << "Select an index to add a number (0-" << size << "): ";
+	cin >> index;
+	if (index >= 0 && index <= size) {
+	cout << "Enter the new value: ";
+	cin >> newValue;
+	int* tempArray = new int[size + 1];
+	for (int i = 0, j = 0; i < size + 1; i++, j++) {
+	if (i == index) {
+	tempArray[i] = newValue;
+	j--; // Adjust j to repeat the current array element
+} else {
+	tempArray[i] = array[j];
+}
+}
+	delete[] array;
+	array = tempArray;
+	size++;
+	cout << "Number has been added at index " << index << ".\n";
+} else {
+	cout << "Invalid index!\n";
+}
+} else if (input == 6) {
+	cout << "Select an index to delete a number (0-" << size << "): ";
+	cin >> index;
+	if (index >=0 && index <= size) {
+		for (int i = index; i < size -1; i++) {
+			array[i] = array[i+1];
+		}
+		size--;
+		cout << "Number at index " << index << " has been deleted \n";
+	}else {
+		cout << "Invalid Index!\n";
+	}
+}}
+cout << "\n";
+return 0;
+} 
