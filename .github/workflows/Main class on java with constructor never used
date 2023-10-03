@@ -1,0 +1,137 @@
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.Objects;
+
+public class Pizzaaaa extends JDialog {
+
+
+
+    double payy, change;
+    int fee, sum, count;
+    String Flav;
+    String DineInnT = "";
+    String Sizee = "";
+    String Change = "";
+    double Solo = 100;
+    double Doublee = 200;
+    double Family = 300;
+    Pizzaa pizza = new Pizzaa();
+    private JPanel contentPane;
+    private JComboBox Flavors;
+    private JTextField textField1;
+    private JCheckBox dineInCheckBox;
+    private JCheckBox takeOutCheckBox;
+    private JRadioButton soloRadioButton;
+    private JRadioButton doubleRadioButton;
+    private JRadioButton familyRadioButton;
+    private JButton PAYButton;
+    private JButton PRINTRECEIPTButton;
+    private JTextField textField2;
+    private JTextField textField3;
+
+    public Pizzaaaa() {
+        setContentPane(contentPane);
+        setModal(true);
+        getRootPane().setDefaultButton(PAYButton);
+
+        PRINTRECEIPTButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            PRINTButton();
+        }
+    });
+
+    dineInCheckBox.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+                CheckDineIn();
+            }
+    });
+    takeOutCheckBox.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            CheckTakeOut();
+        }
+    });
+    PAYButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Payy();
+            }
+        });
+    soloRadioButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+                Soloist();
+            }
+    });
+    doubleRadioButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            Doublee();
+        }
+    });
+    familyRadioButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            Familyy();
+        }
+    });
+    }
+
+
+    private void CheckDineIn() {
+    DineInnT = "Dine In";
+    dineInCheckBox.setSelected(false);
+    }
+    private void CheckTakeOut() {
+        DineInnT = "Take Out";
+        takeOutCheckBox.setSelected(false);
+    }
+    private void Soloist() {
+        textField2.setText(String.valueOf(Solo));
+        fee = Integer.parseInt(textField1.getText());
+        sum = (int) pizza.getSum(fee, Solo);
+        textField3.setText(String.valueOf(sum));
+        Sizee = "Solo";
+    }
+    private void Doublee() {
+        textField2.setText(String.valueOf(Doublee));
+        fee = Integer.parseInt(textField1.getText());
+        sum = (int) pizza.getSum(fee, Doublee);
+        textField3.setText(String.valueOf(sum));
+        Sizee = "Double";
+    }
+
+    private void Familyy() {
+        textField2.setText(String.valueOf(Family));
+        fee = Integer.parseInt(textField1.getText());
+        sum = (int) pizza.getSum(fee, Family);
+        textField3.setText(String.valueOf(sum));
+        Sizee = "Family";
+    }
+
+    private void Payy() {
+        payy = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter Cash: ", "Input: ",
+                JOptionPane.QUESTION_MESSAGE));
+        change = pizza.Changee(payy, sum);
+        if (change >= 0) {
+            count = 0;
+            JOptionPane.showMessageDialog(null, "Change: " + change, "CHANGE", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            count = 1;
+            Change = "INSUFFICIENT AMOUNT";
+            JOptionPane.showMessageDialog(null, "Insufficient Amount!!", "CHANGE", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void PRINTButton() {
+        Flav = Objects.requireNonNull(Flavors.getSelectedItem()).toString();
+        if (count == 0) {
+            JOptionPane.showMessageDialog(null, "ORDER TYPE: " + DineInnT + "\n" + "FLAVOR: " + Flav + "\nSIZE: " + Sizee
+                    + "\nQUANTITY: " + fee + "\nTOTAL AMOUNT: " + sum + "\nCASH: " + payy + "\nCHANGE: " + change);
+        } else {
+            JOptionPane.showMessageDialog(null, "Insufficient Amount!!", "ERROR CHANGE", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        Pizzaaaa dialog = new Pizzaaaa();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+}
