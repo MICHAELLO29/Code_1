@@ -1,0 +1,28 @@
+public class Pizzaa {
+    int Quantity;
+    double Sum,Cash,CashChange;
+    double getSum(int Quantity, double Cash) {
+        return Cash*Quantity;
+    }
+    double Changee ( Double Cash, double Sum) {
+        return Cash - Sum;
+    }
+    public Pizzaa() {
+        this.Quantity = 0;
+        this.Cash = 0;
+        this.CashChange = 0;
+        this.Sum = 0;
+    }
+    public int getQUANTITY() {
+        return  Quantity;
+    }
+    public double getFCash() {
+        return  Cash;
+    }
+    public double getCashChange() {
+        return  CashChange;
+    }
+    public double getSumm() {
+        return  Sum;
+    }
+}
