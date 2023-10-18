@@ -1,0 +1,111 @@
+#include <iostream>
+using namespace std;
+#include <cstdlib> // for system (cls)
+#include <thread>  // for std::this_thread::sleep_for
+
+// Initialization of Variables to use
+const int Max_Size = 5;
+int ii = -1;  // Tail index
+int di = 0;   // Head index
+int QueueArray[Max_Size] = {0};  // Initialize array with zeroes
+int input, ignoredItem;
+
+// ASCII characters for box-like pattern
+char topLeft = 201;
+char topRight = 187;
+char horizontal = 205;
+char vertical = 186;
+char bottomLeft = 200;
+char bottomRight = 188;
+
+// Function (Queue Push)
+void QueuePush(int item) {
+    if (ii == di - 2 || ii == di - 2 + Max_Size) {
+        cout << "Queue is full. Cannot Push.\n";
+        return;
+    } else {
+        ii = (ii + 1) % Max_Size;  // Circular increment
+        QueueArray[ii] = item;
+        cout << "Item pushed successfully.\n";
+    }
+}
+
+// Function (Queue Pop)
+void QueuePop() {
+    if (ii == di - 1 + Max_Size || ii == di - 1) {
+        cout << "Queue is empty. Cannot Pop.\n";
+        return;
+    } else {
+        int item = QueueArray[di];
+        QueueArray[di] = 0;
+        di = (di + 1) % Max_Size;  // Circular increment
+
+        cout << "Item Popped Successfully: " << item << "\n";
+    }
+}
+
+// Function Delay Animation
+void ClearConsoleWithDelay() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // Adjust the delay time as needed
+    system("CLS");
+}
+
+// Function to display the box-like pattern
+void DisplayBoxPattern() {
+    cout << topLeft;
+    for (int i = 0; i < 24; ++i)
+        cout << horizontal;
+    cout << topRight << endl;
+
+    cout << vertical << "WELCOME TO QUEUES"  << " " << " " << " " << " " << " " << " " << " "<< vertical << endl;
+
+    cout << vertical;
+    for (int i = 0; i < 24; ++i)
+        cout << ' ';
+    cout << vertical << endl;
+
+    cout << vertical << "ARRAYS: { ";
+    for (int i = 0; i < Max_Size; ++i) {
+        cout << QueueArray[i];
+        if (i == Max_Size - 1)
+            cout << " ";
+        else
+            cout << ", ";
+    }
+    cout << "} " << vertical << endl;
+
+    cout << vertical << "[1] QUEUE PUSH " << " " << " " << " " << " " << " " << " " << " " << " " << " " << vertical << endl;
+    cout << vertical << "[2] QUEUE POP " <<" " << " " << " " << " " << " " << " " << " " << " " << " " << " " << vertical << endl;
+    cout << vertical << "[3] Exit " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " << " " <<vertical << endl;
+
+    cout << bottomLeft;
+    for (int i = 0; i < 24; ++i)
+        cout << horizontal;
+    cout << bottomRight << endl;
+}
+
+// Main
+int main() {
+    while (true) {
+    	system("CLS"); //clear console every selection of number
+        DisplayBoxPattern();
+
+        cout << "\n";
+        cout << "Enter a number: ";
+        cin >> input;
+
+        if (input == 1) {
+            int item;
+            cout << "Enter the number to push: ";
+            cin >> item;
+            QueuePush(item);
+        } else if (input == 2) {
+            QueuePop();
+        } else if (input == 3) {
+            break;
+        } else {
+            cout << "Invalid input!\n";
+        }
+        ClearConsoleWithDelay(); // Use Function DelayAnimation
+    }
+}
