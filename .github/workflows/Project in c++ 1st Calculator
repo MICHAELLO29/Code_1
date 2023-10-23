@@ -1,0 +1,168 @@
+#include <iostream>
+using namespace std;
+
+const int MAX = 100;  // Maximum stack size
+int customStack[MAX]; // Custom stack array
+int customTos = -1;    // Top of custom stack
+
+bool isOperator(char c) {
+    return (c == '+' || c == '-' || c == '*' || c == '/');
+}
+
+int precedence(char c) {
+    if (c == '+' || c == '-') return 1;
+    if (c == '*' || c == '/') return 2;
+    return 0;  // Default precedence for non-operators
+}
+
+void customPush(int item) {
+    if (customTos == MAX - 1) {
+        cout << "Custom stack full" << endl;
+        return;
+    }
+    customTos++;
+    customStack[customTos] = item;
+}
+
+int customPop() {
+    int item;
+    if (customTos == -1) {
+        cout << "Custom stack empty" << endl;
+        return -1;  // Return a default value (you can handle this differently)
+    }
+    item = customStack[customTos];
+    customTos--;
+    return item;
+}
+
+int evaluateInfix(char* infixExpression) {
+    int index = 0;
+    int operandCount = 0;
+    int operatorCount = 0;
+
+    while (infixExpression[index] != '\0') {
+        char c = infixExpression[index];
+        if (isdigit(c)) {
+            int operand = 0;
+            while (isdigit(c)) {
+                operand = operand * 10 + (c - '0');
+                index++;
+                c = infixExpression[index];
+            }
+            customPush(operand);
+            operandCount++;
+        } else if (isOperator(c)) {
+            operatorCount++;
+            customPush(c); // Push the operator onto the stack
+            index++;
+
+            while (customTos >= 0 && precedence(customStack[customTos]) >= precedence(c)) {
+                char op = customStack[customTos];
+                int operand2 = customPop();
+                int operand1 = customPop();
+                int result;
+
+                switch (op) {
+                    case '+':
+                        result = operand1 + operand2;
+                        break;
+                    case '-':
+                        result = operand1 - operand2;
+                        break;
+                    case '*':
+                        result = operand1 * operand2;
+                        break;
+                    case '/':
+                        if (operand2 == 0) {
+                            cout << "Division by zero" << endl;
+                            return -1;
+                        }
+                        result = operand1 / operand2;
+                        break;
+                }
+                customPush(result);
+            }
+        } else if (c == '(') {
+            customPush(c);
+            index++;
+        } else if (c == ')') {
+            while (customTos >= 0 && customStack[customTos] != '(') {
+                char op = customStack[customTos];
+                int operand2 = customPop();
+                int operand1 = customPop();
+                int result;
+
+                switch (op) {
+                    case '+':
+                        result = operand1 + operand2;
+                        break;
+                    case '-':
+                        result = operand1 - operand2;
+                        break;
+                    case '*':
+                        result = operand1 * operand2;
+                        break;
+                    case '/':
+                        if (operand2 == 0) {
+                            cout << "Division by zero" << endl;
+                            return -1;
+                        }
+                        result = operand1 / operand2;
+                        break;
+                }
+                customPush(result);
+            }
+            customPop();  // Pop the '('
+            index++;
+        } else {
+            // Handle spaces or other characters
+            index++;
+        }
+    }
+
+    if (operandCount != operatorCount + 1) {
+        cout << "Invalid expression format" << endl;
+        return -1;
+    }
+
+    while (customTos >= 0) {
+        char op = customStack[customTos];
+        int operand2 = customPop();
+        int operand1 = customPop();
+        int result;
+
+        switch (op) {
+            case '+':
+                result = operand1 + operand2;
+                break;
+            case '-':
+                result = operand1 - operand2;
+                break;
+            case '*':
+                result = operand1 * operand2;
+                break;
+            case '/':
+                if (operand2 == 0) {
+                    cout << "Division by zero" << endl;
+                    return -1;
+                }
+                result = operand1 / operand2;
+                break;
+        }
+        customPush(result);
+    }
+
+    return customStack[0];
+}
+
+int main() {
+    char infixExpression[100];  // Assuming a maximum of 100 characters
+    cout << "Enter an infix expression: ";
+    cin.getline(infixExpression, 100);
+
+    int result = evaluateInfix(infixExpression);
+    if (result != -1)
+        cout << "Result: " << result << endl;
+
+    return 0;
+}
