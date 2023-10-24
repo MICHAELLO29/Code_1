@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+
+const int MAX = 100; // Maximum stack size
+int stack[MAX];
+int tos = -1; // Top of stack index
+
+void push(int item) {
+    if (tos == MAX - 1) {
+        cout << "Stack full" << endl;
+        exit(1);
+    }
+    tos++;
+    stack[tos] = item;
+}
+
+int pop() {
+    if (tos == -1) {
+        cout << "Stack empty" << endl;
+        exit(1);
+    }
+    int item = stack[tos];
+    tos--;
+    return item;
+}
+
+int precedence(char op) {
+    if (op == '+' || op == '-')
+        return 1;
+    if (op == '*' || op == '/')
+        return 2;
+    return 0;
+}
+
+string infixToPostfix(string infix) {
+    string postfix = "";
+    for (int i = 0; i < infix.length(); i++) {
+        char ch = infix[i];
+        if (isdigit(ch)) {
+            postfix += ch;
+        } else if (ch == '(') {
+            push(ch);
+        } else if (ch == ')') {
+            while (tos >= 0 && stack[tos] != '(') {
+                postfix += static_cast<char>(pop());
+            }
+            pop(); // Pop '('
+        } else {
+            while (tos >= 0 && precedence(ch) <= precedence(stack[tos])) {
+                postfix += static_cast<char>(pop());
+            }
+            push(ch);
+        }
+    }
+
+    while (tos >= 0) {
+        postfix += static_cast<char>(pop());
+    }
+
+    return postfix;
+}
+
+int evaluatePostfix(string postfix) {
+    for (int i = 0; i < postfix.length(); i++) {
+        char ch = postfix[i];
+        if (isdigit(ch)) {
+            push(ch - '0');
+        } else {
+            int operand2 = pop();
+            int operand1 = pop();
+            switch (ch) {
+                case '+':
+                    push(operand1 + operand2);
+                    break;
+                case '-':
+                    push(operand1 - operand2);
+                    break;
+                case '*':
+                    push(operand1 * operand2);
+                    break;
+                case '/':
+                    push(operand1 / operand2);
+                    break;
+            }
+        }
+    }
+
+    return pop();
+}
+
+int main() {
+    string infixExpression;
+    cout << "Enter an infix expression: ";
+    cin >> infixExpression;
+
+    string postfixExpression = infixToPostfix(infixExpression);
+    int result = evaluatePostfix(postfixExpression);
+
+    cout << "Postfix Expression: " << postfixExpression << endl;
+    cout << "Result: " << result << endl;
+}
