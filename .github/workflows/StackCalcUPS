@@ -6,18 +6,18 @@ const int MAX = 10; // Maximum stack size
 int stack[MAX];
 int tos = -1; // Top of stack index
 
-void push(int item) {
+void push(int item) { // Push Function
     if (tos == MAX - 1) {
-        cout << "Stack full" << endl;
+        cout << "Stack full" << "\n";
         return;
     }
     tos++;
     stack[tos] = item;
 }
 
-int pop() {
+int pop() {// Pop Function
     if (tos == -1) {
-        cout << "Stack empty" << endl;
+        cout << "Stack empty" << "\n";
         return -1; // Return a value that can handle the error as needed
     }
     int item = stack[tos];
@@ -25,7 +25,7 @@ int pop() {
     return item;
 }
 
-int precedence(char operand) {
+int precedence(char operand) {//Identifier operator function
     if (operand == '+' || operand == '-')
         return 1;
     if (operand == '*' || operand == '/')
@@ -40,34 +40,34 @@ string infixToPostfix(string infix) {
         if (c == '\0') { // Determine the end of string characters
             break; // Exit the loop when the string ends
         }
-        if (isdigit(c)) {
+        if (isdigit(c)) { //checker of digit 0-9
             postfix += c;
         } else if (c == '(') {
             push(c);
         } else if (c == ')') {
-            while (tos >= 0 && stack[tos] != '(') {
+            while (tos >= 0 && stack[tos] != '(') { // While loop to append on array top of stack with paranthesis 
                 postfix += stack[tos];
                 pop();
             }
-            pop(); // Pop '('
+            pop(); // Pop '(' paranthesis
         } else {
-            while (tos >= 0 && precedence(c) <= precedence(stack[tos])) {
+            while (tos >= 0 && precedence(c) <= precedence(stack[tos])) { // While loop to add the operators on top of stack
                 postfix += stack[tos];
-                pop();
+                pop(); // pop the operator on top of stack
             }
             push(c);
         }
     }
 
     while (tos >= 0) {
-        postfix += stack[tos];
+        postfix += stack[tos]; // append the conversion on stack then pop the duplicates
         pop();
     }
 
-    return postfix;
+    return postfix; // return the conversion as postfix of infix expression
 }
 
-int evaluatePostfix(string postfix) {
+int evaluatePostfix(string postfix) { // checking the operators and applying it
     for (int i = 0; ; i++) {
         char c = postfix[i];
         if (c == '\0') {// Determine the end of string characters
@@ -94,7 +94,6 @@ int evaluatePostfix(string postfix) {
             }
         }
     }
-
     return pop();
 }
 
@@ -106,6 +105,6 @@ int main() {
     string postfixExpression = infixToPostfix(infixExpression);
     int result = evaluatePostfix(postfixExpression);
 
-    cout << "CONVERTED POSTFIX EXPRESSION: " << postfixExpression << endl;
-    cout << "RESULT: " << result << endl;
+    cout << "CONVERTED POSTFIX EXPRESSION: " << postfixExpression << "\n";
+    cout << "RESULT: " << result << "\n";
 }
