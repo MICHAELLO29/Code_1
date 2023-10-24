@@ -8,7 +8,7 @@ int tos = -1; // Top of stack index
 void push(int item) {
     if (tos == MAX - 1) {
         cout << "Stack full" << endl;
-        exit(1);
+        return;
     }
     tos++;
     stack[tos] = item;
@@ -17,7 +17,7 @@ void push(int item) {
 int pop() {
     if (tos == -1) {
         cout << "Stack empty" << endl;
-        exit(1);
+        return -1; // Return a sentinel value or handle the error as needed
     }
     int item = stack[tos];
     tos--;
@@ -34,41 +34,50 @@ int precedence(char op) {
 
 string infixToPostfix(string infix) {
     string postfix = "";
-    for (int i = 0; i < infix.length(); i++) {
-        char ch = infix[i];
-        if (isdigit(ch)) {
-            postfix += ch;
-        } else if (ch == '(') {
-            push(ch);
-        } else if (ch == ')') {
+    for (int i = 0; ; i++) {
+        char c = infix[i];
+        if (c == '\0') {
+            break; // Exit the loop when the string ends
+        }
+        if (isdigit(c)) {
+            postfix += c;
+        } else if (c == '(') {
+            push(c);
+        } else if (c == ')') {
             while (tos >= 0 && stack[tos] != '(') {
-                postfix += static_cast<char>(pop());
+                postfix += stack[tos];
+                pop();
             }
             pop(); // Pop '('
         } else {
-            while (tos >= 0 && precedence(ch) <= precedence(stack[tos])) {
-                postfix += static_cast<char>(pop());
+            while (tos >= 0 && precedence(c) <= precedence(stack[tos])) {
+                postfix += stack[tos];
+                pop();
             }
-            push(ch);
+            push(c);
         }
     }
 
     while (tos >= 0) {
-        postfix += static_cast<char>(pop());
+        postfix += stack[tos];
+        pop();
     }
 
     return postfix;
 }
 
 int evaluatePostfix(string postfix) {
-    for (int i = 0; i < postfix.length(); i++) {
-        char ch = postfix[i];
-        if (isdigit(ch)) {
-            push(ch - '0');
+    for (int i = 0; ; i++) {
+        char c = postfix[i];
+        if (c == '\0') {
+            break; // Exit the loop when the string ends
+        }
+        if (isdigit(c)) {
+            push(c - '0');
         } else {
             int operand2 = pop();
             int operand1 = pop();
-            switch (ch) {
+            switch (c) {
                 case '+':
                     push(operand1 + operand2);
                     break;
